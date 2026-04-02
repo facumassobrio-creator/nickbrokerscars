@@ -34,49 +34,57 @@ create table if not exists vehicle_images (
   storage_path text not null,
   is_primary boolean not null default false,
   position int not null default 0,
-  created_at timestamptz not null default now(),
-  constraint vehicle_images_unique_primary_per_vehicle unique (vehicle_id, is_primary) where (is_primary)
+  created_at timestamptz not null default now()
 );
 
 create index if not exists idx_vehicle_images_vehicle_id on vehicle_images (vehicle_id);
 create index if not exists idx_vehicle_images_position on vehicle_images (vehicle_id, position);
+create unique index if not exists idx_vehicle_images_one_primary_per_vehicle
+  on vehicle_images (vehicle_id)
+  where is_primary = true;
 
 -- RLS y políticas base (usar en Supabase en el dashboard).
 -- Nota: revise y ajuste las políticas de admin según su claim de JWT y roles.
 
 alter table vehicles enable row level security;
 
-create policy if not exists "public_select_published" on vehicles
+drop policy if exists "public_select_published" on vehicles;
+create policy "public_select_published" on vehicles
   for select using (is_published = true);
 
-create policy if not exists "admin_full_access" on vehicles
+drop policy if exists "admin_full_access" on vehicles;
+create policy "admin_full_access" on vehicles
   for all using (
     auth.role() = 'authenticated' AND current_setting('request.jwt.claims', true)::json->>'role' = 'admin'
   );
 
 alter table vehicle_images enable row level security;
 
-create policy if not exists "public_select_images_for_published" on vehicle_images
+drop policy if exists "public_select_images_for_published" on vehicle_images;
+create policy "public_select_images_for_published" on vehicle_images
   for select using (
     exists (
       select 1 from vehicles v where v.id = vehicle_images.vehicle_id and v.is_published = true
     )
   );
 
-create policy if not exists "admin_full_access_images" on vehicle_images
+drop policy if exists "admin_full_access_images" on vehicle_images;
+create policy "admin_full_access_images" on vehicle_images
   for all using (
     auth.role() = 'authenticated' AND current_setting('request.jwt.claims', true)::json->>'role' = 'admin'
   );
 
 -- Trigger de actualización automática "updated_at" para vehicles
-create function if not exists set_updated_at() returns trigger language plpgsql as $$
+create or replace function set_updated_at() returns trigger language plpgsql as $$
 begin
   new.updated_at := now();
   return new;
 end;
 $$;
 
-create trigger if not exists vehicles_set_updated_at
-  before update on vehicles
-  for each row
-  execute function set_updated_at();
+drop trigger if exists vehicles_set_updated_at on vehicles;
+
+create trigger vehicles_set_updated_at
+before update on vehicles
+for each row
+execute function set_updated_at();
