@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Hero automotriz premium</title>
+  <desc id="desc">Visual de portada con silueta deportiva, iluminación roja y atmósfera oscura.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#17171a"/>
+      <stop offset="58%" stop-color="#101013"/>
+      <stop offset="100%" stop-color="#070708"/>
+    </linearGradient>
+    <radialGradient id="redGlow" cx="0.22" cy="0.2" r="0.7">
+      <stop offset="0%" stop-color="#b30000" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#b30000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="floorLight" cx="0.55" cy="0.95" r="0.55">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="carPaint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#26272b"/>
+      <stop offset="45%" stop-color="#121317"/>
+      <stop offset="100%" stop-color="#0a0b0e"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8fa0bf" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#202a36" stop-opacity="0.12"/>
+    </linearGradient>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#redGlow)"/>
+
+  <g stroke="#ffffff" stroke-opacity="0.06" stroke-width="1">
+    <path d="M0 790h1920"/>
+    <path d="M0 860h1920"/>
+    <path d="M0 930h1920"/>
+    <path d="M0 1000h1920"/>
+  </g>
+
+  <ellipse cx="1030" cy="850" rx="540" ry="120" fill="url(#floorLight)"/>
+
+  <g transform="translate(330 370)">
+    <path d="M120 320h1090c58 0 98-13 120-38 18-20 22-41 12-62-12-25-39-39-80-43l-96-9c-34-3-59-15-75-35l-66-84c-25-32-60-49-106-49H553c-53 0-95 13-126 40l-124 106c-20 17-42 28-65 32l-86 14c-45 7-79 23-99 49-17 22-19 45-7 69 14 27 39 44 74 52z" fill="url(#carPaint)"/>
+    <path d="M320 112h518c34 0 62 10 83 30l62 59H258l62-56c17-15 37-23 60-23z" fill="url(#glass)"/>
+    <path d="M1127 228h172c29 0 47 13 54 38l-226-8z" fill="#111316"/>
+    <path d="M112 312h1247" stroke="#ffffff" stroke-opacity="0.16" stroke-width="3"/>
+    <path d="M820 95h189" stroke="#d2d7de" stroke-opacity="0.28" stroke-width="4"/>
+
+    <ellipse cx="430" cy="320" rx="112" ry="112" fill="#0a0b0f"/>
+    <ellipse cx="1056" cy="320" rx="112" ry="112" fill="#0a0b0f"/>
+    <ellipse cx="430" cy="320" rx="67" ry="67" fill="#1f2025"/>
+    <ellipse cx="1056" cy="320" rx="67" ry="67" fill="#1f2025"/>
+    <ellipse cx="430" cy="320" rx="30" ry="30" fill="#aeb4be"/>
+    <ellipse cx="1056" cy="320" rx="30" ry="30" fill="#aeb4be"/>
+
+    <path d="M1170 252h130c20 0 34 9 42 27l-173-5z" fill="#d20000" filter="url(#soft)"/>
+    <path d="M133 257h93c15 0 28 8 36 24l-129-4z" fill="#c8d8ff" filter="url(#soft)"/>
+  </g>
+
+  <g font-family="Arial, sans-serif">
+    <text x="108" y="148" font-size="30" letter-spacing="6" fill="#ffffff" fill-opacity="0.55">SELECCION PREMIUM</text>
+    <text x="108" y="214" font-size="82" font-weight="700" fill="#f6f7f9">Concesionaria Demo</text>
+    <text x="108" y="268" font-size="34" fill="#d7d9de" fill-opacity="0.88">Performance visual lista para presentación comercial</text>
+    <rect x="108" y="294" width="320" height="7" fill="#a00000"/>
+  </g>
+</svg>

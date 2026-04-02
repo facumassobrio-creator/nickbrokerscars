@@ -1,0 +1,20 @@
+// lib/supabaseClient.ts
+// Base para la futura integración con Supabase
+
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error(
+    'Supabase environment variables are required: NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY'
+  );
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  // For future: set auth.autoRefreshToken, etc.
+});
+
+// Nota: No implementar lógica de negocio en esta fase.
+

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Open Graph automotriz premium</title>
+  <desc id="desc">Imagen Open Graph para demo white-label de concesionaria.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#15161a"/>
+      <stop offset="100%" stop-color="#08090b"/>
+    </linearGradient>
+    <radialGradient id="redAccent" cx="0.14" cy="0.2" r="0.82">
+      <stop offset="0%" stop-color="#a00000" stop-opacity="0.66"/>
+      <stop offset="100%" stop-color="#a00000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="car" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a2d35"/>
+      <stop offset="100%" stop-color="#101219"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#redAccent)"/>
+  <ellipse cx="860" cy="525" rx="295" ry="72" fill="#ffffff" fill-opacity="0.08"/>
+
+  <g transform="translate(620 332)">
+    <path d="M56 141h470c32 0 55-6 69-19 11-11 12-24 3-37-9-12-25-18-48-19l-58-4c-19-2-34-9-43-21l-34-40c-16-19-38-28-65-28H267c-33 0-60 8-80 24l-67 55c-11 9-24 15-37 17l-41 7c-24 4-41 13-53 27-9 12-10 24-3 38 9 13 22 20 40 20z" fill="url(#car)"/>
+    <path d="M201 57h268c16 0 30 5 40 15l33 28H159l31-27c9-8 20-12 31-12z" fill="#8fa1bf" fill-opacity="0.28"/>
+    <ellipse cx="190" cy="142" rx="42" ry="42" fill="#080a0e"/>
+    <ellipse cx="449" cy="142" rx="42" ry="42" fill="#080a0e"/>
+    <ellipse cx="190" cy="142" rx="25" ry="25" fill="#202631"/>
+    <ellipse cx="449" cy="142" rx="25" ry="25" fill="#202631"/>
+    <path d="M522 109h56c10 0 18 4 23 13l-73-2z" fill="#bd0000"/>
+  </g>
+
+  <g font-family="Arial, sans-serif" fill="#f5f5f5">
+    <text x="74" y="108" font-size="24" letter-spacing="4" fill-opacity="0.64">WHITE-LABEL DEALERSHIP DEMO</text>
+    <text x="74" y="194" font-size="72" font-weight="700">Auto Elite Demo</text>
+    <text x="74" y="248" font-size="34" fill-opacity="0.87">Presentación premium para concesionarias</text>
+    <text x="74" y="295" font-size="28" fill-opacity="0.72">Lista para personalizar por cliente</text>
+    <rect x="74" y="320" width="318" height="7" fill="#a00000"/>
+  </g>
+</svg>
