@@ -15,7 +15,7 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
 
   if (images.length === 0) {
     return (
-      <div className="aspect-video bg-black/45 border border-white/10 rounded-lg flex items-center justify-center text-white/45">
+      <div className="flex aspect-video items-center justify-center rounded-lg border border-white/10 bg-[#0d0e12bf] text-white/45">
         <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
         </svg>
@@ -25,7 +25,7 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
 
   if (validImages.length === 0) {
     return (
-      <div className="aspect-video bg-black/45 border border-white/10 rounded-lg flex items-center justify-center text-white/45">
+      <div className="flex aspect-video items-center justify-center rounded-lg border border-white/10 bg-[#0d0e12bf] text-white/45">
         <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
         </svg>
@@ -38,7 +38,7 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
 
   return (
     <div className="space-y-4">
-      <div className="relative aspect-16/10 overflow-hidden rounded-2xl border border-white/10 bg-black/60 shadow-[0_18px_45px_rgba(0,0,0,0.45)]">
+      <div className="relative aspect-16/10 overflow-hidden rounded-2xl border border-white/12 bg-[#0e1014d1] shadow-[0_18px_45px_rgba(0,0,0,0.45)]">
         {validImages.map((image, index) => (
           <div
             key={image.id}
@@ -49,12 +49,14 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
               src={image.url as string}
               alt={alt}
               fill
-              className="object-cover transition-transform duration-300 hover:scale-[1.02]"
+              className="object-cover transition-transform duration-500 hover:scale-[1.02]"
               sizes="(max-width: 1024px) 100vw, 60vw"
               priority={index === 0}
             />
           </div>
         ))}
+
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/62 via-black/8 to-transparent" />
 
         {validImages.length > 1 && (
           <>
@@ -62,7 +64,7 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
               type="button"
               onClick={goPrev}
               aria-label="Imagen anterior"
-              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/30 bg-black/55 px-3 py-2 text-white transition duration-200 hover:border-brand-red/70 hover:bg-black/75"
+              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/30 bg-black/55 px-3 py-2 text-white transition duration-300 hover:border-brand-red/75 hover:bg-brand-red/30"
             >
               ←
             </button>
@@ -70,7 +72,7 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
               type="button"
               onClick={goNext}
               aria-label="Siguiente imagen"
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/30 bg-black/55 px-3 py-2 text-white transition duration-200 hover:border-brand-red/70 hover:bg-black/75"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/30 bg-black/55 px-3 py-2 text-white transition duration-300 hover:border-brand-red/75 hover:bg-brand-red/30"
             >
               →
             </button>
@@ -89,7 +91,7 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
               className={`relative aspect-4/3 overflow-hidden rounded-lg border transition duration-200 ${
                 index === activeIndex
                   ? 'border-brand-red ring-1 ring-brand-red/60'
-                  : 'border-white/15 hover:border-brand-red/45'
+                  : 'border-white/15 hover:border-brand-red/45 hover:shadow-[0_10px_22px_-14px_rgba(194,13,18,0.8)]'
               }`}
             >
               <Image

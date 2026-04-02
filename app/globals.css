@@ -1,14 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #121214;
-  --foreground: #f5f5f5;
-  --brand-black: #121214;
-  --brand-white: #f5f5f5;
-  --brand-red: #a00000;
-  --brand-red-dark: #8b0000;
-  --surface: #101010;
-  --surface-light: #1b1b1b;
+  --background: #0c0c0e;
+  --foreground: #f3f3f4;
+  --brand-black: #0d0d10;
+  --brand-white: #f4f4f4;
+  --brand-red: #c20d12;
+  --brand-red-dark: #8f070b;
+  --brand-red-bright: #e20f15;
+  --surface: #121317;
+  --surface-light: #191b20;
+  --surface-elevated: #21242b;
+  --text-soft: #c6c7cc;
 }
 
 @theme inline {
@@ -18,16 +21,33 @@
   --color-brand-white: var(--brand-white);
   --color-brand-red: var(--brand-red);
   --color-brand-red-dark: var(--brand-red-dark);
+  --color-brand-red-bright: var(--brand-red-bright);
   --color-surface: var(--surface);
   --color-surface-light: var(--surface-light);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-text-soft: var(--text-soft);
   --font-sans: var(--font-body);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
   min-height: 100vh;
-  background: var(--brand-black);
+  background:
+    radial-gradient(circle at 8% -5%, rgba(194, 13, 18, 0.26) 0%, rgba(194, 13, 18, 0) 40%),
+    radial-gradient(circle at 88% 0%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 30%),
+    linear-gradient(180deg, #101116 0%, #0b0c10 55%, #08090c 100%);
   color: var(--brand-white);
-  font-family: var(--font-body), Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  letter-spacing: 0.01em;
 }
 
 select {
@@ -53,10 +73,106 @@ h1,
 h2,
 h3 {
   font-family: var(--font-heading), Impact, sans-serif;
+  letter-spacing: 0.035em;
+}
+
+p {
+  color: var(--text-soft);
+}
+
+a,
+button {
+  transition-property: color, background-color, border-color, transform, box-shadow, opacity;
+  transition-duration: 250ms;
+  transition-timing-function: ease;
+}
+
+::selection {
+  background: rgba(194, 13, 18, 0.45);
+  color: #ffffff;
 }
 
 @keyframes premium-pulse {
   0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(160, 0, 0, 0.35); }
   50% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(160, 0, 0, 0); }
+}
+
+@keyframes soft-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.premium-shell {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(165deg, rgba(29, 31, 38, 0.7), rgba(13, 14, 18, 0.78));
+  box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(226, 15, 21, 0.6);
+  background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-bright) 100%);
+  padding: 0.8rem 1.4rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  box-shadow: 0 16px 28px -18px rgba(226, 15, 21, 0.82);
+}
+
+.btn-primary:hover {
+  border-color: rgba(226, 15, 21, 0.95);
+  box-shadow: 0 18px 36px -16px rgba(226, 15, 21, 0.95);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.8rem 1.4rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(194, 13, 18, 0.85);
+  background: rgba(194, 13, 18, 0.92);
+  color: #ffffff;
+  box-shadow: 0 16px 26px -18px rgba(194, 13, 18, 0.9);
+}
+
+.premium-animate-rise {
+  animation: soft-rise 0.55s ease both;
+}
+
+.premium-animate-slide {
+  animation: soft-fade-right 0.55s ease both;
 }
 

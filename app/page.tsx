@@ -35,14 +35,17 @@ export default async function Home() {
   const vehicles = await getPublishedVehicles();
   const vehiclePreview = vehicles.slice(0, 6);
   const { assets, contact, home, social } = siteConfig;
+  const facebookName = social.facebookName || 'Nickbrokers';
 
   const whatsappHref = buildWhatsAppUrl(siteConfig.messages.siteWhatsappMessage);
-  const phoneHref = `tel:${contact.phone.replace(/\s+/g, '')}`;
   const instagramHref = social.instagramUrl;
+  const facebookHref = social.facebookUrl || 'https://facebook.com/Nickbrokers';
+  const mapsHref = home.location.mapOpenUrl;
+  const reviewsHref = home.reviews.reviewsLink;
   const mailHref = `mailto:${contact.email}`;
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-linear-to-b from-[#121214] via-[#0f0f10] to-[#0a0a0a] text-white">
+    <div className="relative isolate min-h-screen overflow-hidden bg-linear-to-b from-[#101217] via-[#0b0c11] to-[#090a0d] text-white">
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute -top-44 -left-44 h-224 w-4xl bg-[radial-gradient(circle,rgba(160,0,0,0.18)_0%,rgba(160,0,0,0.1)_34%,rgba(0,0,0,0)_74%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,rgba(0,0,0,0)_56%)]" />
@@ -50,86 +53,93 @@ export default async function Home() {
 
       <div className="relative z-10">
         <Navbar />
-      <section id="home" className="relative min-h-[90vh] overflow-hidden flex items-center scroll-mt-24">
+      <section id="home" className="relative flex min-h-[94vh] items-center overflow-hidden scroll-mt-24">
         {/* Background Image con Overlay Premium */}
         <div className="absolute inset-0 w-full h-full">
-          <div className="absolute inset-0 bg-[radial-gradient(130%_95%_at_18%_12%,rgba(160,0,0,0.14)_0%,rgba(160,0,0,0.05)_34%,rgba(0,0,0,0)_65%)]" />
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${assets.heroImage}')` }} />
-          {/* Gradient Overlay - Izquierda oscura, derecha más oscura */}
-          <div className="absolute inset-0 bg-linear-to-r from-black/86 via-black/74 to-black/88" />
+          <div className="absolute inset-0 bg-[radial-gradient(120%_95%_at_16%_12%,rgba(194,13,18,0.25)_0%,rgba(194,13,18,0.08)_38%,rgba(0,0,0,0)_68%)]" />
+          <div className="absolute inset-0 bg-cover bg-position-[center_right_18%]" style={{ backgroundImage: `url('${assets.heroImage}')` }} />
+          {/* Gradient Overlay - Izquierda mas oscura, derecha mas clara */}
+          <div className="absolute inset-0 bg-linear-to-r from-black/93 via-black/74 to-black/48" />
           {/* Accent gradient sutil para profundidad */}
-          <div className="absolute inset-0 bg-linear-to-b from-black/32 via-black/10 to-black/68" />
+          <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/10 to-black/82" />
         </div>
 
         {/* Contenido Premium */}
-        <div className="relative w-full container mx-auto px-6 lg:px-12 py-20">
-          <div className="max-w-2xl">
-            {/* Tag Premium */}
-            <div className="inline-block mb-6 pb-3 border-b-2 border-brand-red">
-              <p className="uppercase text-xs tracking-[0.2em] text-brand-red font-bold flex items-center gap-2">
-                <span className="inline-block w-2 h-2 bg-brand-red rounded-full"></span>
-                {home.hero.badge}
-                <span className="inline-block w-2 h-2 bg-brand-red rounded-full"></span>
+        <div className="relative container mx-auto w-full px-5 py-14 sm:px-6 lg:px-12 lg:py-22">
+          <div className="grid items-end gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:gap-14">
+            <div className="premium-animate-slide">
+              {/* Headline Premium */}
+              <h1 className="font-normal uppercase leading-[0.9] tracking-[0.04em] text-white drop-shadow-[0_10px_32px_rgba(0,0,0,0.65)]">
+                <span className="block text-[clamp(3.2rem,8.6vw,8.7rem)]">{home.hero.titleLines[0]}</span>
+                <span className="mt-1 block origin-left scale-x-[1.07] text-[clamp(4.6rem,12vw,12rem)] text-brand-red drop-shadow-[0_0_20px_rgba(194,13,18,0.5)]">{home.hero.titleLines[1]}</span>
+              </h1>
+
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/78 sm:text-base lg:text-lg">
+                No solo vendemos autos, cumplimos tu sueño de tener el propio
               </p>
+
+              <div className="mt-8 h-px max-w-3xl bg-linear-to-r from-brand-red/80 via-white/25 to-transparent" />
             </div>
 
-            {/* Headline Premium */}
-            <h1 className="leading-[1.05] tracking-[0.04em] mb-6 text-white drop-shadow-lg font-normal uppercase">
-              <span className="block whitespace-nowrap text-[clamp(2.75rem,8.2vw,96px)]">{home.hero.titleLines[0]}</span>
-              <span className="block text-brand-red text-[clamp(3.2rem,10vw,120px)]">{home.hero.titleLines[1]}</span>
-            </h1>
+            <aside className="premium-shell premium-animate-rise rounded-2xl p-6 sm:p-7">
+              <p className="text-base leading-relaxed text-white/82 sm:text-lg">
+                {home.hero.subtitle}
+              </p>
 
-            {/* Subheadline */}
-            <p className="text-lg sm:text-xl text-white/90 max-w-lg mb-8 leading-relaxed font-light">
-              {home.hero.subtitle}
-            </p>
-
-            {/* CTA Buttons Premium */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-10">
-              {/* CTA Principal - Rojo Sólido */}
-              <a
-                href="#vehiculos"
-                className="group relative px-8 py-4 bg-brand-red text-white font-bold uppercase tracking-widest rounded-sm text-base transition-all duration-300 hover:bg-brand-red-dark hover:shadow-2xl hover:shadow-brand-red/70 active:scale-95"
-              >
-                <span className="relative z-10 flex items-center justify-center">
-                  {home.hero.primaryCtaLabel}
-                  <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                </span>
-              </a>
-
-              {/* CTA Secundario - Outline Elegante */}
-              <a
-                href={buildWhatsAppUrl(siteConfig.messages.siteWhatsappMessage)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group px-8 py-4 border-2 border-brand-red text-white font-bold uppercase tracking-widest rounded-sm text-base transition-all duration-300 hover:bg-brand-red hover:text-black hover:shadow-2xl hover:shadow-brand-red/60 active:scale-95"
-              >
-                {home.hero.secondaryCtaLabel}
-              </a>
-            </div>
-
-            {/* Trust Element */}
-            <div className="mt-14 pt-8 border-t-2 border-brand-red/60">
-              <p className="text-xs uppercase tracking-widest text-white/70 font-semibold">
-                {home.hero.trustBullets.map((bullet, index) => (
-                  <span key={bullet}>
-                    <span className="text-brand-red text-base">✓</span> {bullet}
-                    {index < home.hero.trustBullets.length - 1 ? '   ' : ''}
+              {/* CTA Buttons Premium */}
+              <div className="mt-7 flex flex-col gap-3">
+                <a
+                  href="#vehiculos"
+                  className="btn-primary group px-7 py-3.5 text-sm sm:text-base"
+                >
+                  <span className="relative z-10 flex items-center justify-center">
+                    {home.hero.primaryCtaLabel}
+                    <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
                   </span>
+                </a>
+
+                <a
+                  href={buildWhatsAppUrl(siteConfig.messages.siteWhatsappMessage)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary px-7 py-3.5 text-sm sm:text-base"
+                >
+                  {home.hero.secondaryCtaLabel}
+                </a>
+              </div>
+
+              {/* Trust Element */}
+              <div className="mt-8 grid grid-cols-1 gap-1.5 sm:grid-cols-3 lg:hidden">
+                {home.hero.trustBullets.map((bullet) => (
+                  <div key={bullet} className="inline-flex cursor-default items-center gap-2 px-0 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/80">
+                    <span className="text-brand-red">•</span>
+                    <span>{bullet}</span>
+                  </div>
                 ))}
-              </p>
+              </div>
+            </aside>
+          </div>
+
+          <div className="mt-7 hidden lg:mt-9 lg:block">
+            <div className="flex flex-wrap items-center gap-8 border-t border-white/12 pt-4">
+              {home.hero.trustBullets.map((bullet) => (
+                <div key={`${bullet}-strip`} className="flex cursor-default items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/75">
+                  <span className="text-brand-red">•</span>
+                  <span>{bullet}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Decorative Element - Líneas sutiles */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-red/5 rounded-full blur-3xl opacity-20 -mr-48 -mt-48" />
+        <div className="absolute -right-40 top-10 h-96 w-96 rounded-full bg-brand-red/18 opacity-45 blur-3xl" />
       </section>
 
-      <main id="vehiculos" className="container mx-auto px-4 py-14 lg:px-6 scroll-mt-24">
-        <div className="text-center mb-14">
-          <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight">{home.inventoryIntro.title}</h2>
-          <p className="mt-4 text-lg text-white/70 max-w-3xl mx-auto">{home.inventoryIntro.description}</p>
+      <main id="vehiculos" className="container mx-auto scroll-mt-24 px-4 py-18 lg:px-6 lg:py-22">
+        <div className="mb-14 text-center">
+          <h2 className="text-4xl font-black tracking-[0.05em] text-white sm:text-5xl">{home.inventoryIntro.title}</h2>
+          <p className="mx-auto mt-4 max-w-3xl text-lg text-white/72">{home.inventoryIntro.description}</p>
         </div>
         {vehicles.length === 0 ? (
           <div className="text-center py-12">
@@ -144,10 +154,10 @@ export default async function Home() {
                 <VehicleCard key={vehicle.id} vehicle={vehicle} />
               ))}
             </div>
-            <div className="mt-10 text-center">
+            <div className="mt-12 text-center">
               <Link
                 href="/vehicles"
-                className="inline-flex items-center rounded-md border border-brand-red/60 px-6 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-brand-red transition duration-300 hover:bg-brand-red hover:text-black"
+                className="btn-secondary text-sm"
               >
                 Ver stock completo
               </Link>
@@ -156,17 +166,17 @@ export default async function Home() {
         )}
       </main>
 
-      <section id="nosotros" className="container mx-auto px-4 py-20 lg:px-6 lg:py-32 scroll-mt-24">
+      <section id="nosotros" className="container mx-auto scroll-mt-24 px-4 py-20 lg:px-6 lg:py-30">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-stretch">
-          <div className="rounded-2xl border border-white/10 bg-black/45 p-5 sm:p-7 lg:p-10 backdrop-blur-sm overflow-hidden">
+          <div className="premium-shell overflow-hidden rounded-2xl p-5 sm:p-7 lg:p-10">
             <p className="text-xs uppercase tracking-[0.24em] text-brand-red font-bold">{home.about.eyebrow}</p>
             <h2 className="mt-4 max-w-[18ch] text-3xl leading-[1.1] sm:text-5xl text-white tracking-tight wrap-break-word">{home.about.title}</h2>
-            <p className="mt-5 text-white/80 leading-relaxed text-sm sm:text-lg">
+            <p className="mt-5 max-w-[62ch] text-sm leading-[1.85] text-white/78 sm:text-base lg:text-[1.06rem]">
               {home.about.paragraphs.join(' ')}
             </p>
             <div className="mt-7 grid grid-cols-2 gap-3 text-sm">
               {home.about.stats.map((stat) => (
-                <div key={stat.value} className="rounded-lg border border-brand-red/30 bg-black/35 p-4">
+                <div key={stat.value} className="rounded-lg border border-brand-red/35 bg-black/35 p-4 transition duration-300 hover:border-brand-red/55 hover:shadow-[0_14px_28px_-20px_rgba(194,13,18,0.8)]">
                   <p className="text-brand-red font-bold">{stat.value}</p>
                   <p className="mt-1 text-white/70">{stat.label}</p>
                 </div>
@@ -174,25 +184,24 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 min-h-80 sm:min-h-90 lg:min-h-120">
-            <Image
-              src={assets.aboutImage}
-              alt={home.about.imageAlt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority={false}
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/15 to-black/10" />
-            <div className="absolute bottom-4 left-4 right-4 rounded-lg border border-white/15 bg-black/55 p-3 text-xs text-white/70">
-              {home.about.imageCaption}
+          <div className="h-full rounded-2xl border border-brand-red/75 bg-black/35 p-1.5 shadow-[0_14px_32px_-20px_rgba(194,13,18,0.55)]">
+            <div className="premium-shell relative min-h-80 overflow-hidden rounded-xl sm:min-h-90 lg:min-h-120">
+              <Image
+                src={assets.aboutImage}
+                alt={home.about.imageAlt}
+                fill
+                className="object-cover transition duration-700 hover:scale-[1.03]"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority={false}
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/10 to-transparent" />
             </div>
           </div>
         </div>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
           {home.benefits.map((benefit) => (
-            <article key={benefit.title} className="rounded-xl border border-white/10 bg-black/45 p-7 transition duration-300 hover:border-brand-red/45 hover:-translate-y-0.5">
+            <article key={benefit.title} className="premium-shell rounded-xl p-7 transition duration-300 hover:-translate-y-1 hover:border-brand-red/45 hover:shadow-[0_20px_36px_-24px_rgba(194,13,18,0.72)]">
               <div className="text-brand-red mb-4">
                 {benefit.iconKey === 'shield' && (
                   <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 3l7 4v6c0 5-3.5 7.5-7 8-3.5-.5-7-3-7-8V7l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -205,13 +214,82 @@ export default async function Home() {
                 )}
               </div>
               <h3 className="text-2xl text-white tracking-tight">{benefit.title}</h3>
-              <p className="mt-3 text-white/70 leading-relaxed">{benefit.description}</p>
+              <p className="mt-3 leading-relaxed text-white/70">{benefit.description}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="contacto" className="container mx-auto px-4 py-20 lg:px-6 scroll-mt-24">
+      <section id="opiniones" className="container mx-auto scroll-mt-24 px-4 pb-10 lg:px-6 lg:pb-14">
+        <div className="premium-shell relative overflow-hidden rounded-3xl border border-brand-red/35 p-6 shadow-[0_28px_60px_-36px_rgba(0,0,0,0.95)] sm:p-8 lg:p-10">
+          <div aria-hidden className="pointer-events-none absolute -left-24 top-18 h-56 w-56 rounded-full bg-brand-red/18 blur-3xl" />
+          <div aria-hidden className="pointer-events-none absolute -right-24 -top-16 h-60 w-60 rounded-full bg-white/6 blur-3xl" />
+
+          <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-11">
+            <div className="rounded-2xl border border-white/12 bg-linear-to-br from-[#1b1d24] via-[#12141a] to-[#0d0f13] p-6 sm:p-8">
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand-red">{home.reviews.eyebrow}</p>
+              <h2 className="mt-3 max-w-[18ch] text-3xl font-black leading-[1.04] tracking-[0.04em] text-white sm:text-4xl lg:text-[2.85rem]">
+                {home.reviews.title}
+              </h2>
+              <p className="mt-4 max-w-[58ch] text-sm leading-relaxed text-white/72 sm:text-base">
+                {home.reviews.subtitle}
+              </p>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 border-t border-white/10 pt-6 sm:grid-cols-[1fr_auto] sm:items-end">
+                <div className="rounded-xl border border-white/10 bg-black/28 px-5 py-4">
+                  <p className="text-[clamp(3.4rem,8vw,5.4rem)] font-black leading-none tracking-tight text-white drop-shadow-[0_0_24px_rgba(194,13,18,0.35)]">
+                    {home.reviews.rating.toFixed(1)}
+                  </p>
+                  <div className="mt-2 flex items-center gap-1.5 text-brand-red/95" aria-label={`Calificación ${home.reviews.rating.toFixed(1)} de 5`}>
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <span key={`review-star-${index}`} className="text-base sm:text-lg">★</span>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-sm font-medium text-white/70">{home.reviews.summaryLabel}</p>
+                </div>
+
+                <div className="rounded-xl border border-white/14 bg-black/30 px-4 py-3 sm:min-w-34">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/62">Reseñas en Google</p>
+                  <p className="mt-1 text-3xl font-black text-white">{home.reviews.reviewCount}</p>
+                </div>
+              </div>
+
+              <a
+                href={reviewsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Ver opiniones de Nickbrokers Cars en Google Maps"
+                className="btn-secondary mt-7 w-fit border-white/55 bg-white/4 px-6 py-3 text-sm hover:border-brand-red/75"
+              >
+                {home.reviews.ctaLabel}
+              </a>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              {home.reviews.reviews.map((review, index) => (
+                <article
+                  key={`${review.author}-${review.quote.slice(0, 18)}`}
+                  className={`group relative rounded-2xl border border-white/10 bg-linear-to-b from-[#181a21f0] to-[#101218f5] p-5 transition duration-300 hover:border-brand-red/48 hover:shadow-[0_22px_38px_-26px_rgba(194,13,18,0.82)] ${index === 0 ? 'lg:col-span-2 lg:p-6' : ''}`}
+                >
+                  <p className="absolute right-5 top-4 text-4xl leading-none text-brand-red/24">”</p>
+                  <p className="text-3xl leading-none text-brand-red/88">“</p>
+                  <p className={`mt-2 leading-relaxed text-white/80 ${index === 0 ? 'text-[0.98rem]' : 'text-sm'}`}>
+                    {review.quote}
+                  </p>
+                  <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
+                    <p className="text-sm font-semibold text-white">{review.author}</p>
+                    <span className="rounded-full border border-white/14 bg-black/28 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/66">
+                      {review.sourceLabel}
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" className="container mx-auto scroll-mt-24 px-4 py-20 lg:px-6">
         <div className="mb-8">
           <p className="text-xs uppercase tracking-[0.24em] text-brand-red font-bold">{home.contact.eyebrow}</p>
           <h2 className="mt-3 text-4xl sm:text-5xl text-white tracking-tight">{home.contact.title}</h2>
@@ -222,7 +300,7 @@ export default async function Home() {
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-xl border border-white/10 bg-black/45 p-6 transition duration-300 hover:border-brand-red/45 hover:-translate-y-0.5 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/60"
+            className="premium-shell rounded-xl p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-red/45 hover:shadow-[0_20px_36px_-24px_rgba(194,13,18,0.72)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/60"
           >
             <div className="text-brand-red mb-4">
               <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
@@ -232,21 +310,23 @@ export default async function Home() {
           </a>
 
           <a
-            href={phoneHref}
-            className="rounded-xl border border-white/10 bg-black/45 p-6 transition duration-300 hover:border-brand-red/45 hover:-translate-y-0.5 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/60"
+            href={facebookHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="premium-shell rounded-xl p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-red/45 hover:shadow-[0_20px_36px_-24px_rgba(194,13,18,0.72)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/60"
           >
             <div className="text-brand-red mb-4">
-              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 012.08 4.18 2 2 0 014 2h3a2 2 0 012 1.72c.12.9.32 1.78.6 2.63a2 2 0 01-.45 2.11L8.1 9.91a16 16 0 006 6l1.45-1.15a2 2 0 012.11-.45c.85.28 1.73.48 2.63.6A2 2 0 0122 16.92z"/></svg>
+              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor"><path d="M13.5 8H16V5h-2.5C11.57 5 10 6.57 10 8.5V11H8v3h2v5h3v-5h2.3l.7-3H13v-2.1c0-.5.4-.9.9-.9z"/></svg>
             </div>
-            <h3 className="text-2xl text-white tracking-tight">Teléfono</h3>
-            <p className="mt-2 text-white/70 text-sm">{contact.phone}</p>
+            <h3 className="text-2xl text-white tracking-tight">Facebook</h3>
+            <p className="mt-2 text-white/70 text-sm">{facebookName}</p>
           </a>
 
           <a
             href={instagramHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-xl border border-white/10 bg-black/45 p-6 transition duration-300 hover:border-brand-red/45 hover:-translate-y-0.5 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/60"
+            className="premium-shell rounded-xl p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-red/45 hover:shadow-[0_20px_36px_-24px_rgba(194,13,18,0.72)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/60"
           >
             <div className="text-brand-red mb-4">
               <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
@@ -257,7 +337,7 @@ export default async function Home() {
 
           <a
             href={mailHref}
-            className="rounded-xl border border-white/10 bg-black/45 p-6 transition duration-300 hover:border-brand-red/45 hover:-translate-y-0.5 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/60"
+            className="premium-shell rounded-xl p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-red/45 hover:shadow-[0_20px_36px_-24px_rgba(194,13,18,0.72)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/60"
           >
             <div className="text-brand-red mb-4">
               <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M22 7l-10 7L2 7"/></svg>
@@ -268,17 +348,28 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="ubicacion" className="container mx-auto px-4 py-20 lg:px-6 scroll-mt-24">
-        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-8 items-start">
-          <div className="rounded-2xl border border-white/10 bg-black/45 p-8 backdrop-blur-sm">
-            <p className="text-xs uppercase tracking-[0.24em] text-brand-red font-bold">{home.location.eyebrow}</p>
-            <h2 className="mt-3 text-4xl sm:text-5xl text-white tracking-tight">{home.location.title}</h2>
-            <p className="mt-5 text-white/75 leading-relaxed">{home.location.description}</p>
-            <p className="mt-3 text-sm text-white/55">{home.location.mapCaption}</p>
+      <section id="ubicacion" className="container mx-auto scroll-mt-24 px-4 py-20 lg:px-6">
+        <div className="grid grid-cols-1 gap-8 items-stretch lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="premium-shell flex h-full flex-col rounded-2xl p-8">
+            <div className="flex h-full flex-col justify-center gap-3">
+              <p className="text-xs uppercase tracking-[0.24em] text-brand-red font-bold">{home.location.eyebrow}</p>
+              <h2 className="text-4xl sm:text-5xl text-white tracking-tight">{home.location.title}</h2>
+              <p className="pt-2 text-white/75 leading-relaxed">{home.location.description}</p>
+              <p className="text-sm text-white/55">{home.location.mapCaption}</p>
+              <a
+                href={mapsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Abrir ubicación de Nickbrokers Cars en Google Maps"
+                className="btn-secondary mt-3 w-fit px-5 py-2.5 text-xs sm:text-sm"
+              >
+                Abrir en Maps
+              </a>
+            </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-black/45 p-2 overflow-hidden">
-            <div className="relative w-full h-90 md:h-107.5 rounded-xl overflow-hidden">
+          <div className="h-full rounded-2xl border border-brand-red/75 bg-black/35 p-1.5 shadow-[0_14px_32px_-20px_rgba(194,13,18,0.55)]">
+            <div className="premium-shell relative h-90 w-full overflow-hidden rounded-xl md:h-107.5 lg:h-full lg:min-h-120">
               <iframe
                 title={home.location.mapTitle}
                 src={home.location.mapEmbedUrl}

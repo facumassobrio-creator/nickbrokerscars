@@ -50,9 +50,9 @@ export const metadata: Metadata = {
     creator: siteConfig.seo.twitterCreator,
   },
   icons: {
-    icon: '/globe.svg',
-    shortcut: '/globe.svg',
-    apple: '/globe.svg',
+    icon: '/flaicon.png',
+    shortcut: '/flaicon.png',
+    apple: '/flaicon.png',
   },
   manifest: '/manifest.webmanifest',
 };

@@ -277,7 +277,7 @@ export default function EditVehiclePage({ params }: RouteParams) {
                 <button
                   type="button"
                   onClick={() => handleDeleteImage(img.id)}
-                  className="absolute right-3 top-3 rounded border border-red-600/40 bg-red-600/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-red-200 transition hover:bg-red-600/35"
+                  className="absolute right-2 top-2 rounded-md border border-red-500/80 bg-red-600/88 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_10px_20px_-12px_rgba(220,38,38,0.95)] backdrop-blur-sm transition duration-200 hover:bg-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/80"
                 >
                   Eliminar
                 </button>

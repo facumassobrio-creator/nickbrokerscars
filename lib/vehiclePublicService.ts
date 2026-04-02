@@ -28,6 +28,7 @@ export async function getPublishedVehicles(): Promise<VehicleWithImages[]> {
     .from("vehicles")
     .select("*, vehicle_images(*)")
     .eq("is_published", true)
+    .order("is_featured", { ascending: false })
     .order("created_at", { ascending: false });
 
   if (error) {
