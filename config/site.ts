@@ -227,11 +227,11 @@ export interface SiteConfig {
 
 export const siteConfig = {
   brand: {
-    name: 'Nickbrokers Cars',
-    shortName: 'Nickbrokers',
+    name: 'NICKBROKERS CARS',
+    shortName: 'NICKBROKERS',
     tagline: 'Vehículos seleccionados, atención personalizada y contacto directo.',
-    legalName: 'Nickbrokers Cars',
-    commercialName: 'Nickbrokers Cars',
+    legalName: 'NICKBROKERS CARS',
+    commercialName: 'NICKBROKERS CARS',
   },
   contact: {
     whatsapp: WHATSAPP_CONTACT_NUMBER,
@@ -255,18 +255,18 @@ export const siteConfig = {
   },
   seo: {
     siteUrl,
-    defaultTitle: 'Nickbrokers Cars',
+    defaultTitle: 'NICKBROKERS CARS',
     defaultDescription: 'Vehículos seleccionados con atención personalizada y asesoramiento claro.',
     defaultOgImage: '/og-default.svg',
     themeColor: '#121214',
     twitterCard: 'summary_large_image',
     twitterSite: '@nickbrokers_cars',
     twitterCreator: '@nickbrokers_cars',
-    homeTitle: 'Nickbrokers Cars - Vehículos seleccionados',
+    homeTitle: 'NICKBROKERS CARS - Vehículos seleccionados',
     homeDescription: 'Encontrá tu próximo vehículo con atención personalizada, transparencia y unidades seleccionadas.',
-    vehicleTitleSuffix: 'Nickbrokers Cars',
-    adminTitle: 'Admin | Nickbrokers Cars',
-    adminDescription: 'Panel de administración de Nickbrokers Cars',
+    vehicleTitleSuffix: 'NICKBROKERS CARS',
+    adminTitle: 'Admin | NICKBROKERS CARS',
+    adminDescription: 'Panel de administración de NICKBROKERS CARS',
   },
   navigation: {
     items: [
@@ -286,10 +286,10 @@ export const siteConfig = {
     aboutImage: '/hero-premium.jpg',
     logoImage: '/logo-nickbrokers.png',
     logoText: {
-      primary: 'Nickbrokers',
+      primary: 'NICKBROKERS',
       secondary: 'CARS',
     },
-    logoAlt: 'Nickbrokers Cars',
+    logoAlt: 'NICKBROKERS CARS',
   },
   messages: {
     floatingWhatsappMessage: 'Hola, quisiera recibir más información sobre los vehículos disponibles.',
@@ -306,7 +306,7 @@ export const siteConfig = {
     locationLabel: 'Ubicación',
     contactLabel: 'Contacto',
     socialLabel: 'Redes',
-    bottomText: 'nickbrokers cars',
+    bottomText: 'NICKBROKERS CARS',
     whatsappLabel: 'WhatsApp',
     phoneLabel: 'Teléfono',
     emailLabel: 'Email',
@@ -341,7 +341,7 @@ export const siteConfig = {
   home: {
     hero: {
       badge: 'Atención Personalizada',
-      titleLines: ['Nickbrokers', 'Cars'],
+      titleLines: ['NICKBROKERS', 'CARS'],
       subtitle: 'Encontrá tu próximo vehículo con atención personalizada, transparencia y unidades seleccionadas.',
       primaryCtaLabel: 'Ver Vehículos',
       secondaryCtaLabel: 'Contactar por WhatsApp',
@@ -356,20 +356,20 @@ export const siteConfig = {
       eyebrow: 'Presentación',
       title: 'Nosotros',
       paragraphs: [
-        'En Nickbrokers Cars seleccionamos cada vehículo con criterio, priorizando calidad, presencia y confianza.',
+        'En NICKBROKERS CARS seleccionamos cada vehículo con criterio, priorizando calidad, presencia y confianza.',
         'Nuestro enfoque está puesto en brindar una atención personalizada, transparente y cercana, acompañando a cada cliente durante todo el proceso para que encuentre el auto indicado con seguridad y tranquilidad.',
       ],
       stats: [
         { value: 'Atención directa', label: 'Seguimiento personalizado en cada consulta' },
         { value: 'Unidades seleccionadas', label: 'Stock elegido con criterio y transparencia' },
       ],
-      imageAlt: 'Showroom de Nickbrokers Cars',
+      imageAlt: 'Showroom de NICKBROKERS CARS',
       imageCaption: '',
     },
     reviews: {
       eyebrow: 'Opiniones reales',
       title: 'La confianza de nuestros clientes también habla por nosotros',
-      subtitle: 'Experiencias verificadas que reflejan la calidad del servicio y la atención personalizada de Nickbrokers Cars.',
+      subtitle: 'Experiencias verificadas que reflejan la calidad del servicio y la atención personalizada de NICKBROKERS CARS.',
       rating: 4.8,
       reviewCount: 39,
       summaryLabel: 'Calificación en Google',
@@ -423,7 +423,7 @@ export const siteConfig = {
       title: 'Ubicación',
       description: 'Avenida Armenia 3880, Corrientes Capital',
       mapCaption: 'Lunes a Viernes: 9:00 a 12:30 hs · 16:30 a 20:00 hs',
-      mapTitle: 'Mapa Nickbrokers Cars',
+      mapTitle: 'Mapa NICKBROKERS CARS',
       mapEmbedUrl: 'https://www.google.com/maps?q=Avenida%20Armenia%203880%20Corrientes%20Capital&output=embed',
       mapOpenUrl: 'https://www.google.com/maps/search/?api=1&query=Avenida+Armenia+3880+Corrientes+Capital',
     },

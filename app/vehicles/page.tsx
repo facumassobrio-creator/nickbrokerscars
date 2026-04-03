@@ -7,7 +7,7 @@ import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
   title: `Vehículos | ${siteConfig.seo.vehicleTitleSuffix}`,
-  description: 'Explorá todo el stock disponible de Nickbrokers Cars.',
+  description: 'Explorá todo el stock disponible de NICKBROKERS CARS.',
   alternates: {
     canonical: '/vehicles',
   },

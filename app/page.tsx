@@ -258,7 +258,7 @@ export default async function Home() {
                 href={reviewsHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Ver opiniones de Nickbrokers Cars en Google Maps"
+                aria-label="Ver opiniones de NICKBROKERS CARS en Google Maps"
                 className="btn-secondary mt-7 w-fit border-white/55 bg-white/4 px-6 py-3 text-sm hover:border-brand-red/75"
               >
                 {home.reviews.ctaLabel}
@@ -360,7 +360,7 @@ export default async function Home() {
                 href={mapsHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Abrir ubicación de Nickbrokers Cars en Google Maps"
+                aria-label="Abrir ubicación de NICKBROKERS CARS en Google Maps"
                 className="btn-secondary mt-3 w-fit px-5 py-2.5 text-xs sm:text-sm"
               >
                 Abrir en Maps
