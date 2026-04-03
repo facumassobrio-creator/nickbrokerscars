@@ -35,26 +35,23 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
 
   const goPrev = () => setActiveIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1));
   const goNext = () => setActiveIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1));
+  const activeImage = validImages[activeIndex];
 
   return (
     <div className="space-y-4">
       <div className="relative aspect-16/10 overflow-hidden rounded-2xl border border-white/12 bg-[#0e1014d1] shadow-[0_18px_45px_rgba(0,0,0,0.45)]">
-        {validImages.map((image, index) => (
-          <div
-            key={image.id}
-            className={`absolute inset-0 transition-opacity duration-300 ${index === activeIndex ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
-            aria-hidden={index !== activeIndex}
-          >
-            <Image
-              src={image.url as string}
-              alt={alt}
-              fill
-              className="object-cover transition-transform duration-500 hover:scale-[1.02]"
-              sizes="(max-width: 1024px) 100vw, 60vw"
-              priority={index === 0}
-            />
-          </div>
-        ))}
+        <div className="absolute inset-0 transition-opacity duration-300">
+          <Image
+            key={activeImage.id}
+            src={activeImage.url as string}
+            alt={alt}
+            fill
+            className="object-cover transition-transform duration-500 hover:scale-[1.02]"
+            sizes="(max-width: 1024px) 100vw, 58vw"
+            quality={80}
+            priority={activeIndex === 0}
+          />
+        </div>
 
         <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/62 via-black/8 to-transparent" />
 
@@ -100,6 +97,7 @@ export function VehicleGallery({ images, alt }: VehicleGalleryProps) {
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 20vw, 120px"
+                quality={60}
               />
             </button>
           ))}

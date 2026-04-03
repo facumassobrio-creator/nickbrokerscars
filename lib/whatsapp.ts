@@ -7,3 +7,7 @@ export function buildWhatsAppUrl(message?: string): string {
 
   return `https://wa.me/${WHATSAPP_CONTACT_NUMBER}?text=${encodeURIComponent(message)}`;
 }
+
+export function trackWhatsAppClick(eventKey: string): void {
+  console.log(`[whatsapp_click] ${eventKey}`);
+}

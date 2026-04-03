@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const vehicleTitle = `${vehicle.brand} ${vehicle.model} ${vehicle.year} - ${siteConfig.seo.vehicleTitleSuffix}`;
   const vehicleDescription = vehicle.description || `Vehículo ${vehicle.brand} ${vehicle.model} ${vehicle.year} disponible en ${siteConfig.seo.vehicleTitleSuffix}.`;
   const canonicalPath = `/vehicles/${id}`;
+  const primaryImage = vehicle.primary_image_url || siteConfig.seo.defaultOgImage;
 
   return {
     title: vehicleTitle,
@@ -46,13 +47,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: canonicalPath,
       title: vehicleTitle,
       description: vehicleDescription,
-      images: [siteConfig.seo.defaultOgImage],
+      images: [
+        {
+          url: primaryImage,
+          alt: `${vehicle.brand} ${vehicle.model} ${vehicle.year}`,
+        },
+      ],
     },
     twitter: {
       card: siteConfig.seo.twitterCard,
       title: vehicleTitle,
       description: vehicleDescription,
-      images: [siteConfig.seo.defaultOgImage],
+      images: [primaryImage],
       site: siteConfig.seo.twitterSite,
       creator: siteConfig.seo.twitterCreator,
     },
@@ -71,17 +77,64 @@ export default async function VehicleDetailPage({ params }: PageProps) {
     brand: vehicle.brand,
     model: vehicle.model,
     variant: vehicle.variant,
+    year: vehicle.year,
+    price: vehicle.price,
+    currency: vehicle.currency,
+    vehicleUrl: `${siteConfig.seo.siteUrl}/vehicles/${vehicle.id}`,
+    dealershipName: siteConfig.brand.name,
   });
+  const vehicleName = `${vehicle.brand} ${vehicle.model} ${vehicle.year}`;
+  const vehicleImages = vehicle.images
+    .map((image) => image.url)
+    .filter((url): url is string => Boolean(url));
+  const vehicleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Vehicle',
+    name: vehicleName,
+    brand: {
+      '@type': 'Brand',
+      name: vehicle.brand,
+    },
+    model: vehicle.model,
+    vehicleModelDate: String(vehicle.year),
+    mileageFromOdometer: {
+      '@type': 'QuantitativeValue',
+      value: vehicle.mileage,
+      unitCode: 'KMT',
+    },
+    color: vehicle.color,
+    fuelType: vehicle.fuel_type,
+    vehicleTransmission: vehicle.transmission,
+    description: vehicle.description || `Vehículo ${vehicleName} disponible en ${siteConfig.brand.name}.`,
+    image: vehicleImages,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: vehicle.currency,
+      price: vehicle.price,
+      availability: 'https://schema.org/InStock',
+      url: `${siteConfig.seo.siteUrl}/vehicles/${vehicle.id}`,
+      seller: {
+        '@type': 'AutoDealer',
+        name: siteConfig.brand.name,
+      },
+    },
+  };
 
   return (
     <div className="min-h-screen bg-linear-to-b from-[#0f1014] via-[#0a0b0f] to-[#07080b] text-white">
-      <PublicVehiclesAutoRefresh />
+      <PublicVehiclesAutoRefresh intervalMs={25_000} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(vehicleJsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
       <Navbar />
       <main className="container mx-auto px-4 py-8 lg:px-6 lg:py-12">
         <div className="mx-auto max-w-7xl rounded-3xl border border-white/12 bg-linear-to-b from-[#1a1c22c9] to-[#101218d1] p-4 shadow-[0_25px_65px_rgba(0,0,0,0.45)] ring-1 ring-white/5 sm:p-6 lg:p-8">
           <div className="grid grid-cols-1 gap-7 lg:grid-cols-[1.2fr_0.8fr] lg:gap-10">
             <section className="premium-shell rounded-2xl p-3 sm:p-4">
-              <VehicleGallery images={vehicle.images} alt={`${vehicle.brand} ${vehicle.model}`} />
+              <VehicleGallery images={vehicle.images} alt={vehicleName} />
             </section>
 
             <section className="premium-shell flex flex-col gap-6 rounded-2xl p-5 sm:p-6">
@@ -95,6 +148,16 @@ export default async function VehicleDetailPage({ params }: PageProps) {
                 <p className="text-4xl font-black tracking-tight text-white drop-shadow-[0_0_12px_rgba(194,13,18,0.35)] sm:text-5xl">
                   {vehicle.currency} {vehicle.price.toLocaleString()}
                 </p>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/68">Disponible · Consultá ahora</p>
+                <div className="pt-2">
+                  <WhatsAppButton
+                    href={vehicleWhatsAppUrl}
+                    label="Consultar por este vehículo"
+                    trackingKey={`whatsapp_click_vehicle_${vehicle.id}`}
+                    microcopy="Respuesta rápida · Atención personalizada"
+                    className="w-full sm:w-auto"
+                  />
+                </div>
               </header>
 
               <section>
@@ -143,14 +206,6 @@ export default async function VehicleDetailPage({ params }: PageProps) {
                   {vehicle.description || 'Sin descripción disponible.'}
                 </p>
               </section>
-
-              <div className="pt-1">
-                <WhatsAppButton
-                  href={vehicleWhatsAppUrl}
-                  label="Consultar por esta unidad"
-                  className="w-full sm:w-auto"
-                />
-              </div>
             </section>
           </div>
         </div>

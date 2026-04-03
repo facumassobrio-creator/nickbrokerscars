@@ -8,7 +8,7 @@ import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
   title: `Vehículos | ${siteConfig.seo.vehicleTitleSuffix}`,
-  description: 'Explorá todo el stock disponible de NICKBROKERS CARS.',
+  description: 'Stock actualizado de vehículos publicados en NICKBROKERS CARS con información de precio, año y detalles de cada unidad.',
   alternates: {
     canonical: '/vehicles',
   },
@@ -16,13 +16,13 @@ export const metadata: Metadata = {
     type: 'website',
     url: '/vehicles',
     title: `Vehículos | ${siteConfig.seo.vehicleTitleSuffix}`,
-    description: 'Listado completo de vehículos publicados.',
+    description: 'Stock actualizado de vehículos publicados en NICKBROKERS CARS.',
     images: [siteConfig.seo.defaultOgImage],
   },
   twitter: {
     card: siteConfig.seo.twitterCard,
     title: `Vehículos | ${siteConfig.seo.vehicleTitleSuffix}`,
-    description: 'Listado completo de vehículos publicados.',
+    description: 'Stock actualizado de vehículos publicados en NICKBROKERS CARS.',
     images: [siteConfig.seo.defaultOgImage],
     site: siteConfig.seo.twitterSite,
     creator: siteConfig.seo.twitterCreator,
@@ -34,7 +34,7 @@ export default async function VehiclesPage() {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-[#0f1014] via-[#0a0b0f] to-[#07080b] text-white">
-      <PublicVehiclesAutoRefresh />
+      <PublicVehiclesAutoRefresh intervalMs={15_000} />
       <Navbar />
       <main className="container mx-auto px-4 py-12 lg:px-6 lg:py-16">
         <section className="premium-shell rounded-2xl p-6 sm:p-8">

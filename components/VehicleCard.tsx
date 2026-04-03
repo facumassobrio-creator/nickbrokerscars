@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { VehicleWithImages } from '@/lib/vehicleService';
 import { siteConfig } from '@/config/site';
 import { buildVehicleWhatsAppUrl } from '@/lib/vehicleContact';
+import { WhatsAppButton } from '@/components/WhatsAppButton';
 
 interface VehicleCardProps {
   vehicle: VehicleWithImages;
@@ -11,9 +12,18 @@ interface VehicleCardProps {
 export function VehicleCard({ vehicle }: VehicleCardProps) {
   const { id, brand, model, variant, year, price, currency, primary_image_url, is_featured } = vehicle;
   const { theme, home } = siteConfig;
-  const vehicleWhatsAppUrl = buildVehicleWhatsAppUrl({ brand, model, variant });
-  const vehicleTitle = `${brand} ${model}`;
   const detailHref = `/vehicles/${id}`;
+  const vehicleWhatsAppUrl = buildVehicleWhatsAppUrl({
+    brand,
+    model,
+    variant,
+    year,
+    price,
+    currency,
+    vehicleUrl: `${siteConfig.seo.siteUrl}${detailHref}`,
+    dealershipName: siteConfig.brand.name,
+  });
+  const vehicleTitle = `${brand} ${model}`;
 
   return (
     <article
@@ -30,10 +40,11 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
         {primary_image_url ? (
           <Image
             src={primary_image_url}
-            alt={vehicleTitle}
+            alt={`${vehicleTitle} ${year}`}
             fill
             className="object-cover transition duration-700 group-hover:scale-[1.06]"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 360px"
+            quality={76}
           />
         ) : (
           <div className="flex h-full items-center justify-center bg-[#0d0e12] text-white/40">
@@ -51,6 +62,7 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
             <span className="inline-flex rounded-full border border-brand-red/35 bg-brand-red/10 px-3 py-1 text-xs font-semibold uppercase text-brand-red/95">{home.vehicleCard.premiumBadge}</span>
           ) : null}
         </div>
+        <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/65">Disponible · Consultá ahora</p>
       </div>
 
       <div className="relative z-20 grid gap-2 px-5 pb-5">
@@ -60,14 +72,13 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
         >
           Ver más
         </Link>
-        <a
+        <WhatsAppButton
           href={vehicleWhatsAppUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary w-full px-4 py-2.5 text-xs"
-        >
-          Consultar
-        </a>
+          label="Consultar por este vehículo"
+          trackingKey={`whatsapp_click_vehicle_${id}`}
+          microcopy="Respuesta rápida · Atención personalizada"
+          className="w-full px-4 py-2.5 text-xs"
+        />
       </div>
     </article>
   );

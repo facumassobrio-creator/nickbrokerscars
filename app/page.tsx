@@ -44,10 +44,40 @@ export default async function Home() {
   const mapsHref = home.location.mapOpenUrl;
   const reviewsHref = home.reviews.reviewsLink;
   const mailHref = `mailto:${contact.email}`;
+  const socialProfiles = [
+    social.instagramUrl,
+    social.facebookUrl,
+    social.tiktokUrl,
+    social.youtubeUrl,
+    social.linkedinUrl,
+  ].filter(Boolean);
+  const homeJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AutoDealer',
+    name: siteConfig.brand.name,
+    url: siteConfig.seo.siteUrl,
+    image: `${siteConfig.seo.siteUrl}${assets.logoImage || siteConfig.seo.defaultOgImage}`,
+    description: siteConfig.seo.homeDescription,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: contact.addressLine,
+      addressLocality: contact.city,
+      addressCountry: 'AR',
+    },
+    telephone: contact.phone,
+    email: contact.email,
+    sameAs: socialProfiles,
+  };
 
   return (
     <div className="relative isolate min-h-screen overflow-hidden bg-linear-to-b from-[#101217] via-[#0b0c11] to-[#090a0d] text-white">
-      <PublicVehiclesAutoRefresh />
+      <PublicVehiclesAutoRefresh intervalMs={30_000} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(homeJsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute -top-44 -left-44 h-224 w-4xl bg-[radial-gradient(circle,rgba(160,0,0,0.18)_0%,rgba(160,0,0,0.1)_34%,rgba(0,0,0,0)_74%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,rgba(0,0,0,0)_56%)]" />
@@ -59,7 +89,15 @@ export default async function Home() {
         {/* Background Image con Overlay Premium */}
         <div className="absolute inset-0 w-full h-full">
           <div className="absolute inset-0 bg-[radial-gradient(120%_95%_at_16%_12%,rgba(194,13,18,0.25)_0%,rgba(194,13,18,0.08)_38%,rgba(0,0,0,0)_68%)]" />
-          <div className="absolute inset-0 bg-cover bg-position-[center_right_18%]" style={{ backgroundImage: `url('${assets.heroImage}')` }} />
+          <Image
+            src={assets.heroImage}
+            alt=""
+            fill
+            priority
+            quality={82}
+            className="object-cover object-[center_right_18%]"
+            sizes="100vw"
+          />
           {/* Gradient Overlay - Izquierda mas oscura, derecha mas clara */}
           <div className="absolute inset-0 bg-linear-to-r from-black/93 via-black/74 to-black/48" />
           {/* Accent gradient sutil para profundidad */}
@@ -194,7 +232,7 @@ export default async function Home() {
                 fill
                 className="object-cover transition duration-700 hover:scale-[1.03]"
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                priority={false}
+                quality={78}
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/10 to-transparent" />
             </div>

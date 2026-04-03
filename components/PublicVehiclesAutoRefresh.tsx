@@ -3,17 +3,29 @@
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
-const REFRESH_INTERVAL_MS = 20_000;
-const MIN_REFRESH_GAP_MS = 5_000;
+const DEFAULT_REFRESH_INTERVAL_MS = 20_000;
+const DEFAULT_MIN_REFRESH_GAP_MS = 5_000;
 
-export function PublicVehiclesAutoRefresh() {
+interface PublicVehiclesAutoRefreshProps {
+  intervalMs?: number;
+  refreshOnFocus?: boolean;
+  refreshOnVisibility?: boolean;
+  minRefreshGapMs?: number;
+}
+
+export function PublicVehiclesAutoRefresh({
+  intervalMs = DEFAULT_REFRESH_INTERVAL_MS,
+  refreshOnFocus = true,
+  refreshOnVisibility = true,
+  minRefreshGapMs = DEFAULT_MIN_REFRESH_GAP_MS,
+}: PublicVehiclesAutoRefreshProps) {
   const router = useRouter();
   const lastRefreshAtRef = useRef<number>(0);
 
   useEffect(() => {
     const refresh = () => {
       const now = Date.now();
-      if (now - lastRefreshAtRef.current < MIN_REFRESH_GAP_MS) {
+      if (now - lastRefreshAtRef.current < minRefreshGapMs) {
         return;
       }
 
@@ -22,13 +34,13 @@ export function PublicVehiclesAutoRefresh() {
     };
 
     const onVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
+      if (refreshOnVisibility && document.visibilityState === "visible") {
         refresh();
       }
     };
 
     const onWindowFocus = () => {
-      if (document.visibilityState === "visible") {
+      if (refreshOnFocus && document.visibilityState === "visible") {
         refresh();
       }
     };
@@ -37,17 +49,26 @@ export function PublicVehiclesAutoRefresh() {
       if (document.visibilityState === "visible") {
         refresh();
       }
-    }, REFRESH_INTERVAL_MS);
+    }, intervalMs);
 
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    window.addEventListener("focus", onWindowFocus);
+    if (refreshOnVisibility) {
+      document.addEventListener("visibilitychange", onVisibilityChange);
+    }
+
+    if (refreshOnFocus) {
+      window.addEventListener("focus", onWindowFocus);
+    }
 
     return () => {
       window.clearInterval(intervalId);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-      window.removeEventListener("focus", onWindowFocus);
+      if (refreshOnVisibility) {
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+      }
+      if (refreshOnFocus) {
+        window.removeEventListener("focus", onWindowFocus);
+      }
     };
-  }, [router]);
+  }, [intervalMs, minRefreshGapMs, refreshOnFocus, refreshOnVisibility, router]);
 
   return null;
 }

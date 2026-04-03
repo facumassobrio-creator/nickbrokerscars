@@ -294,7 +294,7 @@ export const siteConfig = {
   messages: {
     floatingWhatsappMessage: 'Hola, quisiera recibir más información sobre los vehículos disponibles.',
     floatingWhatsappAriaLabel: 'Contactar por WhatsApp',
-    whatsappCtaLabel: 'Contactar por WhatsApp',
+    whatsappCtaLabel: 'Consultar por WhatsApp',
     siteWhatsappMessage: 'Hola, quisiera recibir más información sobre los vehículos disponibles.',
     vehicleInquiryTemplate: 'Hola, estoy interesado en el {{brand}} {{model}} {{year}}. ¿Podrías darme más información?',
   },
@@ -344,7 +344,7 @@ export const siteConfig = {
       titleLines: ['NICKBROKERS', 'CARS'],
       subtitle: 'Encontrá tu próximo vehículo con atención personalizada, transparencia y unidades seleccionadas.',
       primaryCtaLabel: 'Ver Vehículos',
-      secondaryCtaLabel: 'Contactar por WhatsApp',
+      secondaryCtaLabel: 'Consultar por WhatsApp',
       trustBullets: ['Atención Directa', 'Unidades Seleccionadas', 'Asesoramiento Claro'],
     },
     inventoryIntro: {
