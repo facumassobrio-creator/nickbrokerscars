@@ -424,7 +424,7 @@ export const siteConfig = {
       description: 'Avenida Armenia 3880, Corrientes Capital',
       mapCaption: 'Lunes a Viernes: 9:00 a 12:30 hs · 16:30 a 20:00 hs',
       mapTitle: 'Mapa NICKBROKERS CARS',
-      mapEmbedUrl: 'https://www.google.com/maps?q=Avenida%20Armenia%203880%20Corrientes%20Capital&output=embed',
+      mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14143.279343161544!2d-58.8125143!3d-27.4689155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94456b9d49def803%3A0x6a72b06d9ab13a47!2sNickbrokers%20cars!5e0!3m2!1ses-419!2sar!4v1770000000000!5m2!1ses-419!2sar',
       mapOpenUrl: 'https://www.google.com/maps/search/?api=1&query=Avenida+Armenia+3880+Corrientes+Capital',
     },
   },

@@ -409,12 +409,13 @@ export default async function Home() {
           </div>
 
           <div className="h-full rounded-2xl border border-brand-red/75 bg-black/35 p-1.5 shadow-[0_14px_32px_-20px_rgba(194,13,18,0.55)]">
-            <div className="premium-shell relative h-90 w-full overflow-hidden rounded-xl md:h-107.5 lg:h-full lg:min-h-120">
+            <div className="premium-shell relative h-80 w-full overflow-hidden rounded-xl sm:h-95 lg:h-full lg:min-h-120">
               <iframe
                 title={home.location.mapTitle}
                 src={home.location.mapEmbedUrl}
                 className="h-full w-full border-0"
                 loading="lazy"
+                allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
