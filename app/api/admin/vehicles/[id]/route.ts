@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 import { ensureAdminRequest } from "@/lib/adminApi";
 import type { Vehicle } from "@/types/vehicle";
 import { deleteVehicle, getVehicleById, updateVehicle } from "@/lib/vehicleAdminService";
+import { revalidatePublicVehiclePaths } from "@/lib/publicCache";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -56,9 +56,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 
     const updated = await updateVehicle(id, cleaned as Partial<Omit<Vehicle, "id" | "created_at" | "updated_at">>);
     
-    revalidatePath("/vehicles");
-    revalidatePath(`/vehicles/${id}`);
-    revalidatePath("/");
+    revalidatePublicVehiclePaths(id);
     
     return NextResponse.json({ vehicle: updated }, { status: 200 });
   } catch (err) {
@@ -77,9 +75,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
   try {
     await deleteVehicle(id);
     
-    revalidatePath("/vehicles");
-    revalidatePath(`/vehicles/${id}`);
-    revalidatePath("/");
+    revalidatePublicVehiclePaths(id);
     
     return NextResponse.json({ message: "Vehículo eliminado" }, { status: 200 });
   } catch (err) {

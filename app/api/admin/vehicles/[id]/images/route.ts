@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ensureAdminRequest } from "@/lib/adminApi";
 import { insertVehicleImage, getVehicleById, reorderVehicleImages } from "@/lib/vehicleAdminService";
+import { revalidatePublicVehiclePaths } from "@/lib/publicCache";
 
 const MAX_IMAGE_SIZE_BYTES = 8 * 1024 * 1024;
 const MAX_IMAGES_PER_VEHICLE = 12;
@@ -81,6 +82,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       insertedImages.push(inserted);
     }
 
+    revalidatePublicVehiclePaths(id);
     return NextResponse.json({ images: insertedImages }, { status: 201 });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Error subiendo imágenes";
@@ -104,6 +106,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
 
     await reorderVehicleImages(id, imageIds);
+
+    revalidatePublicVehiclePaths(id);
 
     return NextResponse.json({ message: "Orden actualizado" }, { status: 200 });
   } catch (err) {

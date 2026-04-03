@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 import { ensureAdminRequest } from "@/lib/adminApi";
 import { createVehicle, getAllVehicles } from "@/lib/vehicleAdminService";
+import { revalidatePublicVehiclePaths } from "@/lib/publicCache";
 
 export async function GET(request: NextRequest) {
   const auth = await ensureAdminRequest(request);
@@ -53,8 +53,7 @@ export async function POST(request: NextRequest) {
       is_featured: Boolean(is_featured),
     });
 
-    revalidatePath("/vehicles");
-    revalidatePath("/");
+    revalidatePublicVehiclePaths(vehicle.id);
 
     return NextResponse.json({ vehicle }, { status: 201 });
   } catch (err) {

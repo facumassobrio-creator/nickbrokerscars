@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { ensureAdminRequest } from "@/lib/adminApi";
 import { supabaseAdmin } from "@/lib/supabaseAdminClient";
 import { deleteVehicleImage, setVehiclePrimaryImage } from "@/lib/vehicleAdminService";
+import { revalidatePublicVehiclePaths } from "@/lib/publicCache";
 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string; imageId: string }> }) {
   const { id, imageId } = await params;
@@ -26,6 +27,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
 
   try {
     await deleteVehicleImage(imageId);
+    revalidatePublicVehiclePaths(id);
     return NextResponse.json({ message: "Imagen eliminada" }, { status: 200 });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Error eliminando imagen";
@@ -56,6 +58,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 
   try {
     await setVehiclePrimaryImage(id, imageId);
+    revalidatePublicVehiclePaths(id);
     return NextResponse.json({ message: "Imagen principal actualizada" }, { status: 200 });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Error actualizando imagen principal";
