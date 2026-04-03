@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { VehicleCard } from '@/components/VehicleCard';
+import { PublicVehiclesAutoRefresh } from '@/components/PublicVehiclesAutoRefresh';
 import { getPublishedVehicles } from '@/lib/vehiclePublicService';
 import { siteConfig } from '@/config/site';
 
@@ -33,6 +34,7 @@ export default async function VehiclesPage() {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-[#0f1014] via-[#0a0b0f] to-[#07080b] text-white">
+      <PublicVehiclesAutoRefresh />
       <Navbar />
       <main className="container mx-auto px-4 py-12 lg:px-6 lg:py-16">
         <section className="premium-shell rounded-2xl p-6 sm:p-8">

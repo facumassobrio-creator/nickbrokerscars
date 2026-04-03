@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getPublishedVehicles } from '@/lib/vehiclePublicService';
 import { VehicleCard } from '@/components/VehicleCard';
+import { PublicVehiclesAutoRefresh } from '@/components/PublicVehiclesAutoRefresh';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { siteConfig } from '@/config/site';
@@ -46,6 +47,7 @@ export default async function Home() {
 
   return (
     <div className="relative isolate min-h-screen overflow-hidden bg-linear-to-b from-[#101217] via-[#0b0c11] to-[#090a0d] text-white">
+      <PublicVehiclesAutoRefresh />
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute -top-44 -left-44 h-224 w-4xl bg-[radial-gradient(circle,rgba(160,0,0,0.18)_0%,rgba(160,0,0,0.1)_34%,rgba(0,0,0,0)_74%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,rgba(0,0,0,0)_56%)]" />

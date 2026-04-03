@@ -5,6 +5,7 @@ import { VehicleGallery } from '@/components/VehicleGallery';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { PublicVehiclesAutoRefresh } from '@/components/PublicVehiclesAutoRefresh';
 import { siteConfig } from '@/config/site';
 import { buildVehicleWhatsAppUrl } from '@/lib/vehicleContact';
 
@@ -74,6 +75,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-[#0f1014] via-[#0a0b0f] to-[#07080b] text-white">
+      <PublicVehiclesAutoRefresh />
       <Navbar />
       <main className="container mx-auto px-4 py-8 lg:px-6 lg:py-12">
         <div className="mx-auto max-w-7xl rounded-3xl border border-white/12 bg-linear-to-b from-[#1a1c22c9] to-[#101218d1] p-4 shadow-[0_25px_65px_rgba(0,0,0,0.45)] ring-1 ring-white/5 sm:p-6 lg:p-8">
