@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { isAdminUser } from "@/lib/auth";
 import VehicleForm, { VehicleFormValues } from "@/components/admin/VehicleForm";
+import { optimizeVehicleUploadImages } from "@/lib/image/optimizeImage";
 
 export default function NewVehiclePage() {
   const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warnings, setWarnings] = useState<string[]>([]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -27,6 +29,7 @@ export default function NewVehiclePage() {
 
   const handleSubmit = async (values: VehicleFormValues, files: { primaryImage: File | null; extraImages: File[] }) => {
     setError(null);
+    setWarnings([]);
     setIsSaving(true);
 
     try {
@@ -43,12 +46,28 @@ export default function NewVehiclePage() {
 
       const { vehicle } = (await createRes.json()) as { vehicle: { id: string } };
 
-      if (files.primaryImage || files.extraImages.length > 0) {
+      const hadSelectedImages = Boolean(files.primaryImage) || files.extraImages.length > 0;
+      const optimizedFiles = await optimizeVehicleUploadImages({
+        primaryImage: files.primaryImage,
+        extraImages: files.extraImages,
+        options: { maxSide: 1600, quality: 0.78, outputType: "image/webp" },
+      });
+
+      if (optimizedFiles.warnings.length > 0) {
+        setWarnings(optimizedFiles.warnings);
+      }
+
+      const hasAnyOptimizedImage = Boolean(optimizedFiles.primaryImage) || optimizedFiles.extraImages.length > 0;
+      if (hadSelectedImages && !hasAnyOptimizedImage) {
+        throw new Error("No se pudo procesar ninguna imagen seleccionada. Reintentá con otros archivos.");
+      }
+
+      if (hasAnyOptimizedImage) {
         const formData = new FormData();
-        if (files.primaryImage) {
-          formData.append("primaryImage", files.primaryImage);
+        if (optimizedFiles.primaryImage) {
+          formData.append("primaryImage", optimizedFiles.primaryImage);
         }
-        files.extraImages.forEach((file) => formData.append("extraImages", file));
+        optimizedFiles.extraImages.forEach((file) => formData.append("extraImages", file));
 
         const imagesRes = await fetch(`/api/admin/vehicles/${vehicle.id}/images`, {
           method: "POST",
@@ -88,6 +107,11 @@ export default function NewVehiclePage() {
       </div>
 
       {error && <div className="rounded-xl border border-red-700/60 bg-red-950/40 px-4 py-3 text-sm text-red-200">{error}</div>}
+      {warnings.length > 0 && (
+        <div className="rounded-xl border border-amber-600/60 bg-amber-950/40 px-4 py-3 text-sm text-amber-200">
+          {warnings.join(" ")}
+        </div>
+      )}
 
       <VehicleForm onSubmit={handleSubmit} submitLabel={isSaving ? "Guardando..." : "Guardar vehículo"} disabled={isSaving} />
     </div>

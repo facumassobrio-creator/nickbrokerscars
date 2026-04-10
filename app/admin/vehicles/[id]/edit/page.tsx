@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { isAdminUser } from "@/lib/auth";
 import VehicleForm, { VehicleFormValues } from "@/components/admin/VehicleForm";
+import { optimizeVehicleUploadImages } from "@/lib/image/optimizeImage";
 
 type RouteParams = { params: Promise<{ id: string }> };
 
@@ -20,6 +21,7 @@ export default function EditVehiclePage({ params }: RouteParams) {
   const [isSaving, setIsSaving] = useState(false);
   const [detail, setDetail] = useState<VehicleDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [warnings, setWarnings] = useState<string[]>([]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -103,6 +105,7 @@ export default function EditVehiclePage({ params }: RouteParams) {
   const handleSubmit = async (values: VehicleFormValues, files: { primaryImage: File | null; extraImages: File[] }) => {
     const { id } = await params;
     setError(null);
+    setWarnings([]);
     setIsSaving(true);
 
     try {
@@ -117,12 +120,28 @@ export default function EditVehiclePage({ params }: RouteParams) {
         throw new Error(body.message || "No se pudo actualizar el vehículo");
       }
 
-      if (files.primaryImage || files.extraImages.length > 0) {
+      const hadSelectedImages = Boolean(files.primaryImage) || files.extraImages.length > 0;
+      const optimizedFiles = await optimizeVehicleUploadImages({
+        primaryImage: files.primaryImage,
+        extraImages: files.extraImages,
+        options: { maxSide: 1600, quality: 0.78, outputType: "image/webp" },
+      });
+
+      if (optimizedFiles.warnings.length > 0) {
+        setWarnings(optimizedFiles.warnings);
+      }
+
+      const hasAnyOptimizedImage = Boolean(optimizedFiles.primaryImage) || optimizedFiles.extraImages.length > 0;
+      if (hadSelectedImages && !hasAnyOptimizedImage) {
+        throw new Error("No se pudo procesar ninguna imagen seleccionada. Reintentá con otros archivos.");
+      }
+
+      if (hasAnyOptimizedImage) {
         const formData = new FormData();
-        if (files.primaryImage) {
-          formData.append("primaryImage", files.primaryImage);
+        if (optimizedFiles.primaryImage) {
+          formData.append("primaryImage", optimizedFiles.primaryImage);
         }
-        files.extraImages.forEach((image) => formData.append("extraImages", image));
+        optimizedFiles.extraImages.forEach((image) => formData.append("extraImages", image));
 
         const uploadRes = await fetch(`/api/admin/vehicles/${id}/images`, {
           method: "POST",
@@ -232,6 +251,11 @@ export default function EditVehiclePage({ params }: RouteParams) {
       </div>
 
       {error && <div className="rounded-xl border border-red-700/60 bg-red-950/40 px-4 py-3 text-sm text-red-200">{error}</div>}
+      {warnings.length > 0 && (
+        <div className="rounded-xl border border-amber-600/60 bg-amber-950/40 px-4 py-3 text-sm text-amber-200">
+          {warnings.join(" ")}
+        </div>
+      )}
 
       <VehicleForm
         initialValues={detail}

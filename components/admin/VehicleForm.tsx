@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export type VehicleFormValues = {
   brand: string;
@@ -51,9 +51,23 @@ export default function VehicleForm({ initialValues, onSubmit, disabled, submitL
     return URL.createObjectURL(primaryImage);
   }, [primaryImage]);
 
+  useEffect(() => {
+    return () => {
+      if (primaryPreview) {
+        URL.revokeObjectURL(primaryPreview);
+      }
+    };
+  }, [primaryPreview]);
+
   const extraPreviews = useMemo(() => {
     return extraImages.map((image) => ({ name: image.name, url: URL.createObjectURL(image) }));
   }, [extraImages]);
+
+  useEffect(() => {
+    return () => {
+      extraPreviews.forEach((preview) => URL.revokeObjectURL(preview.url));
+    };
+  }, [extraPreviews]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
